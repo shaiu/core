@@ -9,10 +9,10 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .const import CONF_SHOW_ARCHIVED, DOMAIN
+from .const import DOMAIN
 from .coordinator import SeventeenTrackCoordinator
 
-PLATFORMS = [Platform.SENSOR]
+PLATFORMS: list[Platform] = [Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -26,9 +26,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     except SeventeenTrackError as err:
         raise ConfigEntryNotReady from err
 
-    coordinator = SeventeenTrackCoordinator(
-        hass, client, entry.data[CONF_SHOW_ARCHIVED]
-    )
+    coordinator = SeventeenTrackCoordinator(hass, client, entry)
 
     await coordinator.async_config_entry_first_refresh()
 

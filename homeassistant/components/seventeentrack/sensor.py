@@ -16,7 +16,7 @@ from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import DOMAIN as HOMEASSISTANT_DOMAIN, HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 from homeassistant.helpers import config_validation as cv
-from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType, StateType
@@ -121,11 +121,8 @@ async def async_setup_entry(
 
     coordinator: SeventeenTrackCoordinator = hass.data[DOMAIN][config_entry.entry_id]
 
-    assert config_entry.unique_id
-    unique_id = config_entry.unique_id
-
     async_add_entities(
-        SeventeenTrackSummarySensor(unique_id, description, coordinator)
+        SeventeenTrackSummarySensor(description, coordinator)
         for description in SENSOR_TYPES
     )
 
@@ -138,20 +135,20 @@ class SeventeenTrackSummarySensor(
     _attr_attribution = ATTRIBUTION
     _attr_icon = "mdi:package"
     _attr_native_unit_of_measurement = "packages"
+    _attr_has_entity_name = True
 
     def __init__(
         self,
-        unique_id: str,
         description: SensorEntityDescription,
         coordinator: SeventeenTrackCoordinator,
     ) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
         self.entity_description = description
-        self._attr_unique_id = f"{unique_id}_{description.key}"
+        self._attr_unique_id = f"{coordinator.config_entry.entry_id}_{description.key}"
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, unique_id)},
-            entry_type=DeviceEntryType.SERVICE,
+            identifiers={(DOMAIN, coordinator.config_entry.entry_id)},
+            name="17Track",
         )
 
     @property

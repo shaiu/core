@@ -42,25 +42,25 @@
   "entity": {
     "sensor": {
       "delivered": {
-        "name": "Seventeentrack Packages Delivered"
+        "name": "Packages Delivered"
       },
       "expired": {
-        "name": "Seventeentrack Packages Expired"
+        "name": "Packages Expired"
       },
       "in_transit": {
-        "name": "Seventeentrack Packages In Transit"
+        "name": "Packages In Transit"
       },
       "not_found": {
-        "name": "Seventeentrack Packages Not Found"
+        "name": "Packages Not Found"
       },
       "ready_to_be_picked_up": {
-        "name": "Seventeentrack Packages Ready to be Picked Up"
+        "name": "Packages Ready to be Picked Up"
       },
       "returned": {
-        "name": "Seventeentrack Packages Returned"
+        "name": "Packages Returned"
       },
       "undelivered": {
-        "name": "Seventeentrack Packages Undelivered"
+        "name": "Packages Undelivered"
       }
     }
   }
